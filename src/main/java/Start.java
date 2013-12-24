@@ -10,9 +10,10 @@ public class Start {
   public static void main(String[] args) {
     WebDriver driver = new FirefoxDriver();
 
-    String idProd = "370647";
-    String price = "";
-    String goods = "http://m.miniinthebox.com/ru/premium-charge-and-sync-cable-for-ipad-2-ipad-iphone-ipods-1m-white-_p197167.html";
+    String idProd = "240560";
+    String price = "24,79";
+    String goods = "http://m.miniinthebox.com/ru/universal-car-windshield-swivel-mount-for-cell-phones_p240560.html";
+    int countTry = 2;
 
     driver.get("https://m.miniinthebox.com/ru/index.php?main_page=login");
     WebElement login = driver.findElement(By.id("loginEmail"));
@@ -24,23 +25,32 @@ public class Start {
 
     driver.get(goods);
     WebElement isSale = null;
-    int i=0;
+    int i = 0;
     do {
-//      нужно ли тут перезагружать страницу?
+      driver.get(goods);
       i++;
       try {
         isSale = driver.findElement(By.id("salePrice_" + idProd));
-      } catch (NoSuchElementException e) {
-        System.out.println("Написать чтобы повторилось");
+      } catch (NoSuchElementException ignored) {
+      } finally {
+        System.out.println("Попытка " + i + ", время: " + new Date() + " " + (isSale != null ? isSale.getText() : "не найден елемент цена распродажи"));
       }
     }
-    while (!(isSale != null && isSale.getText().contains(price)) || i>1000);
+    while (!(isSale != null && isSale.getText().contains(price)) && i < countTry);
+
+    if (i < countTry) {
+      if (isSale.getText().contains(price)) {
+        System.out.println("Найдена скидка!");
+      }
+    } else {
+      System.out.println("Превысило " + i + " попыток");
+    }
 
     WebElement buy = null;
     try {
       buy = driver.findElement(By.id("submit_" + idProd));
     } catch (NoSuchElementException e) {
-      System.out.println("Почему нет ?");
+      System.out.println("Не найдена кнопка купить");
     }
 
     if (buy != null) {
