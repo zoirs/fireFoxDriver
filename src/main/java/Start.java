@@ -10,10 +10,10 @@ public class Start {
   public static void main(String[] args) {
     WebDriver driver = new FirefoxDriver();
 
-    String idProd = "240560";
-    String price = "24,79";
-    String goods = "http://m.miniinthebox.com/ru/universal-car-windshield-swivel-mount-for-cell-phones_p240560.html";
-    int countTry = 2;
+    String idProd = "657206";
+    String price = "17,71";
+    String goods = "http://m.miniinthebox.com/ru/national-flag-pattern-body-sticker-for-samsung-galaxy-s3-i9300_p657206.html";
+    int countTry = 12;
 
     driver.get("https://m.miniinthebox.com/ru/index.php?main_page=login");
     WebElement login = driver.findElement(By.id("loginEmail"));
@@ -27,6 +27,8 @@ public class Start {
     WebElement isSale = null;
     int i = 0;
     do {
+      do{
+      }while (!(new Date().getMinutes()==4 && new Date().getSeconds()==0 ));
       driver.get(goods);
       i++;
       try {
@@ -53,7 +55,7 @@ public class Start {
       System.out.println("Не найдена кнопка купить");
     }
 
-    if (buy != null) {
+    if (buy != null && i < countTry) {
       buy.click();
     }
 
