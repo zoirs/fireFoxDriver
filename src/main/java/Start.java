@@ -10,10 +10,8 @@ public class Start {
   public static void main(String[] args) {
     WebDriver driver = new FirefoxDriver();
 
-    String idProd = "657206";
-    String price = "17,71";
-    String goods = "http://m.miniinthebox.com/ru/national-flag-pattern-body-sticker-for-samsung-galaxy-s3-i9300_p657206.html";
-    int countTry = 12;
+    String idProd = "447195";
+    String goods = "http://m.miniinthebox.com/ru/gold-plated-salix-leaf-white-diamond-necklace-earring-ring-and-bracelet-jewelry-set_p447195.html";
 
     driver.get("https://m.miniinthebox.com/ru/index.php?main_page=login");
     WebElement login = driver.findElement(By.id("loginEmail"));
@@ -24,40 +22,15 @@ public class Start {
     in.submit();
 
     driver.get(goods);
-    WebElement isSale = null;
-    int i = 0;
     do {
-      do{
-      }while (!(new Date().getMinutes()==4 && new Date().getSeconds()==0 ));
-      driver.get(goods);
-      i++;
-      try {
-        isSale = driver.findElement(By.id("salePrice_" + idProd));
-      } catch (NoSuchElementException ignored) {
-      } finally {
-        System.out.println("Попытка " + i + ", время: " + new Date() + " " + (isSale != null ? isSale.getText() : "не найден елемент цена распродажи"));
-      }
-    }
-    while (!(isSale != null && isSale.getText().contains(price)) && i < countTry);
 
-    if (i < countTry) {
-      if (isSale.getText().contains(price)) {
-        System.out.println("Найдена скидка!");
-      }
-    } else {
-      System.out.println("Превысило " + i + " попыток");
-    }
+    } while (!(new Date().getMinutes() == 0 && new Date().getSeconds() == 0));
 
-    WebElement buy = null;
-    try {
-      buy = driver.findElement(By.id("submit_" + idProd));
-    } catch (NoSuchElementException e) {
-      System.out.println("Не найдена кнопка купить");
-    }
+    driver.get(goods);
+    System.out.println(new Date());
 
-    if (buy != null && i < countTry) {
-      buy.click();
-    }
+    WebElement buy = driver.findElement(By.id("submit_" + idProd));
+    buy.click();
 
   }
 }
