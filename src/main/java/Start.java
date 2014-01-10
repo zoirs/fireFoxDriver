@@ -9,7 +9,7 @@ import java.util.Date;
 public class Start {
   public static void main(String[] args) {
     WebDriver driver = new FirefoxDriver();
-
+//..
     String idProd = "447195";
     String goods = "http://m.miniinthebox.com/ru/gold-plated-salix-leaf-white-diamond-necklace-earring-ring-and-bracelet-jewelry-set_p447195.html";
 
